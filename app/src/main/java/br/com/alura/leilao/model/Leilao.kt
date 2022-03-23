@@ -1,18 +1,25 @@
 package br.com.alura.leilao.model
 
 import java.io.Serializable
-import java.util.*
-import kotlin.collections.ArrayList
 
 class Leilao(val descricao: String) : Serializable {
-    var lances: MutableList<Lance> = mutableListOf()
-    var maiorLance: Double = Double.NEGATIVE_INFINITY
-    var menorLance: Double = Double.POSITIVE_INFINITY
+    private var lances: MutableList<Lance> = mutableListOf()
+    var maiorLance: Double = 0.0
+    var menorLance: Double = 0.0
 
     fun propoe(lance: Lance) {
+        val valorLance = lance.valor
+
+        if (maiorLance > valorLance) return
+
         lances.add(lance)
         lances.sortByDescending { it.valor }
-        val valorLance = lance.valor
+
+        if (lances.size == 1){
+            maiorLance = valorLance
+            menorLance = valorLance
+        }
+
         calculaMaiorLance(valorLance)
         calculaMenorLance(valorLance)
     }
@@ -34,4 +41,6 @@ class Leilao(val descricao: String) : Serializable {
         if (quantidade > 3) quantidade = 3
         return lances.subList(0, quantidade)
     }
+
+    fun quantidadeDevolvida(): Int = lances.size
 }

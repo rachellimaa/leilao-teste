@@ -5,8 +5,8 @@ import org.junit.Test
 
 class LeilaoTest {
 
-    val console = Leilao("Console")
-    val user1 = Usuario("Teste1")
+    private val console = Leilao("Console")
+    private val user1 = Usuario("Teste1")
 
     @Test
     fun testeDescricao() {
@@ -37,16 +37,6 @@ class LeilaoTest {
     }
 
     @Test
-    fun testeMaiorLanceOrdemDecrescente() {
-        console.propoe(Lance(user1, 200.0))
-        console.propoe(Lance(Usuario("Teste2"), 100.0))
-
-        val maiorValorDevolvidoCarro = console.maiorLance
-
-        assertEquals(200.0, maiorValorDevolvidoCarro, delta)
-    }
-
-    @Test
     fun testeMenorValor() {
         console.propoe(Lance(user1, 200.0))
 
@@ -64,16 +54,6 @@ class LeilaoTest {
         val menorValorDevolvido = console.menorLance
 
         assertEquals(100.0, menorValorDevolvido, delta)
-    }
-
-    @Test
-    fun testeMenorLanceOrdemDecrescente() {
-        console.propoe(Lance(user1, 200.0))
-        console.propoe(Lance(Usuario("Teste2"), 100.0))
-
-        val menorValorDevolvidoCarro = console.menorLance
-
-        assertEquals(100.0, menorValorDevolvidoCarro, delta)
     }
 
     @Test
@@ -133,5 +113,29 @@ class LeilaoTest {
         assertEquals(700.0, listLances[0].valor, delta)
         assertEquals(600.0, listLances[1].valor, delta)
         assertEquals(500.0, listLances[2].valor, delta)
+    }
+
+    @Test
+    fun maiorLanceDevolverZeroQuandoNaoTiverLance(){
+        val maiorLanceDevolvido = console.maiorLance
+
+        assertEquals(0.0, maiorLanceDevolvido, delta)
+    }
+
+    @Test
+    fun menorLanceDevolverZeroQuandoNaoTiverLance(){
+        val menorLanceDevolvido = console.menorLance
+
+        assertEquals(0.0, menorLanceDevolvido, delta)
+    }
+
+    @Test
+    fun adicionarLanceQuandoForMenorQueOMaiorLance(){
+        console.propoe(Lance(user1, 700.0))
+        console.propoe(Lance(Usuario("Teste2"), 400.0))
+
+        val quantidadeLancesDevolvidas = console.quantidadeDevolvida()
+
+        assertEquals(1, quantidadeLancesDevolvidas)
     }
 }
