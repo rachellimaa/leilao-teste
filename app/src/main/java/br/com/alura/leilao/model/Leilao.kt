@@ -12,6 +12,13 @@ class Leilao(val descricao: String) : Serializable {
 
         if (maiorLance > valorLance) return
 
+        if (lances.isNotEmpty()){
+            val usuarioNovo = lance.usuario
+            val ultimoUsuario = lances[0].usuario
+
+            if (usuarioNovo.equals(ultimoUsuario)) return
+        }
+
         lances.add(lance)
         lances.sortByDescending { it.valor }
 

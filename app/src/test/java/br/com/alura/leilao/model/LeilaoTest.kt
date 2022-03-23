@@ -138,4 +138,14 @@ class LeilaoTest {
 
         assertEquals(1, quantidadeLancesDevolvidas)
     }
+
+    @Test
+    fun adicionarLanceQuandoForOMesmoUsuario(){
+        console.propoe(Lance(user1, 500.0))
+        console.propoe(Lance(Usuario("Teste1"), 600.0))
+
+        val quantidadeLancesDevolvidas = console.quantidadeDevolvida()
+
+        assertEquals(1, quantidadeLancesDevolvidas)
+    }
 }
