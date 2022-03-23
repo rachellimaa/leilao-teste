@@ -14,13 +14,15 @@ class LeilaoTest {
         assertEquals("Console", descricaoDevolvida)
     }
 
+    private val delta = 0.0001
+
     @Test
     fun testeMaiorValor() {
         console.propoe(Lance(Usuario("Rachel"), 200.0))
 
         val maiorValorDevolvidoConsole = console.maiorLance
 
-        assertEquals(200.0, maiorValorDevolvidoConsole, 0.0001)
+        assertEquals(200.0, maiorValorDevolvidoConsole, delta)
 
     }
 
@@ -31,7 +33,7 @@ class LeilaoTest {
 
         val maiorValorDevolvido = console.maiorLance
 
-        assertEquals(200.0, maiorValorDevolvido, 0.0001)
+        assertEquals(200.0, maiorValorDevolvido, delta)
     }
 
     @Test
@@ -41,7 +43,7 @@ class LeilaoTest {
 
         val maiorValorDevolvidoCarro = console.maiorLance
 
-        assertEquals(200.0, maiorValorDevolvidoCarro, 0.0001)
+        assertEquals(200.0, maiorValorDevolvidoCarro, delta)
     }
 
     @Test
@@ -50,7 +52,7 @@ class LeilaoTest {
 
         val menorValorDevolvidoConsole = console.menorLance
 
-        assertEquals(200.0, menorValorDevolvidoConsole, 0.0001)
+        assertEquals(200.0, menorValorDevolvidoConsole, delta)
 
     }
 
@@ -61,7 +63,7 @@ class LeilaoTest {
 
         val menorValorDevolvido = console.menorLance
 
-        assertEquals(100.0, menorValorDevolvido, 0.0001)
+        assertEquals(100.0, menorValorDevolvido, delta)
     }
 
     @Test
@@ -71,6 +73,65 @@ class LeilaoTest {
 
         val menorValorDevolvidoCarro = console.menorLance
 
-        assertEquals(100.0, menorValorDevolvidoCarro, 0.0001)
+        assertEquals(100.0, menorValorDevolvidoCarro, delta)
+    }
+
+    @Test
+    fun testeTresMaioresLances(){
+        console.propoe(Lance(user1, 200.0))
+        console.propoe(Lance(Usuario("Teste2"), 300.0))
+        console.propoe(Lance(Usuario("Teste1"), 500.0))
+
+        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+
+        assertEquals(3, listLances.size)
+        assertEquals(500.0, listLances[0].valor, delta)
+        assertEquals(300.0, listLances[1].valor, delta)
+        assertEquals(200.0, listLances[2].valor, delta)
+    }
+
+    @Test
+    fun tresMaioresLancesSemLance(){
+        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+
+        assertEquals(0, listLances.size)
+    }
+
+    @Test
+    fun treMaioresLancesComUmLance(){
+        console.propoe(Lance(user1, 200.0))
+
+        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+
+        assertEquals(1, listLances.size)
+        assertEquals(200.0, listLances[0].valor, delta)
+    }
+
+    @Test
+    fun treMaioresLancesComDoisLances(){
+        console.propoe(Lance(user1, 200.0))
+        console.propoe(Lance(Usuario("Teste2"), 400.0))
+
+        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+
+        assertEquals(2, listLances.size)
+        assertEquals(400.0, listLances[0].valor, delta)
+        assertEquals(200.0, listLances[1].valor, delta)
+    }
+
+    @Test
+    fun treMaioresLancesComMaisDeTresLances(){
+        console.propoe(Lance(user1, 200.0))
+        console.propoe(Lance(user1, 500.0))
+        console.propoe(Lance(user1, 600.0))
+        console.propoe(Lance(user1, 700.0))
+        console.propoe(Lance(Usuario("Teste2"), 400.0))
+
+        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+
+        assertEquals(3, listLances.size)
+        assertEquals(700.0, listLances[0].valor, delta)
+        assertEquals(600.0, listLances[1].valor, delta)
+        assertEquals(500.0, listLances[2].valor, delta)
     }
 }

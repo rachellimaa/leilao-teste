@@ -5,11 +5,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class Leilao(val descricao: String) : Serializable {
-    private val lances: List<Lance> = ArrayList()
+    var lances: MutableList<Lance> = mutableListOf()
     var maiorLance: Double = Double.NEGATIVE_INFINITY
     var menorLance: Double = Double.POSITIVE_INFINITY
 
     fun propoe(lance: Lance) {
+        lances.add(lance)
+        lances.sortByDescending { it.valor }
         val valorLance = lance.valor
         calculaMaiorLance(valorLance)
         calculaMenorLance(valorLance)
@@ -25,5 +27,11 @@ class Leilao(val descricao: String) : Serializable {
         if (valorLance > maiorLance) {
             maiorLance = valorLance
         }
+    }
+
+    fun getTresMaioresLances(): MutableList<Lance> {
+        var quantidade = lances.size
+        if (quantidade > 3) quantidade = 3
+        return lances.subList(0, quantidade)
     }
 }
