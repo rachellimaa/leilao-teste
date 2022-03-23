@@ -11,11 +11,19 @@ class Leilao(val descricao: String) : Serializable {
 
     fun propoe(lance: Lance) {
         val valorLance = lance.valor
-        if (valorLance > maiorLance){
-            maiorLance = valorLance
-        }
-        if (valorLance < menorLance){
+        calculaMaiorLance(valorLance)
+        calculaMenorLance(valorLance)
+    }
+
+    private fun calculaMenorLance(valorLance: Double) {
+        if (valorLance < menorLance) {
             menorLance = valorLance
+        }
+    }
+
+    private fun calculaMaiorLance(valorLance: Double) {
+        if (valorLance > maiorLance) {
+            maiorLance = valorLance
         }
     }
 }
