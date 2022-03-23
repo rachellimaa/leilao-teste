@@ -148,4 +148,25 @@ class LeilaoTest {
 
         assertEquals(1, quantidadeLancesDevolvidas)
     }
+
+    @Test
+    fun adicionarLanceQuandoOUsuarioDerCincoLances(){
+        val user2 = Usuario("Teste2")
+        console.propoe(Lance(user1, 100.0))
+        console.propoe(Lance(user2, 200.0))
+        console.propoe(Lance(user1, 300.0))
+        console.propoe(Lance(user2, 400.0))
+        console.propoe(Lance(user1, 500.0))
+        console.propoe(Lance(user2, 600.0))
+        console.propoe(Lance(user1, 700.0))
+        console.propoe(Lance(user2, 800.0))
+        console.propoe(Lance(user1, 900.0))
+        console.propoe(Lance(user2, 1000.0))
+        console.propoe(Lance(user1, 1100.0))
+        console.propoe(Lance(user2, 1200.0))
+
+        val quantidadeLancesDevolvidas = console.quantidadeDevolvida()
+
+        assertEquals(10, quantidadeLancesDevolvidas)
+    }
 }

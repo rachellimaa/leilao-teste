@@ -16,7 +16,16 @@ class Leilao(val descricao: String) : Serializable {
             val usuarioNovo = lance.usuario
             val ultimoUsuario = lances[0].usuario
 
-            if (usuarioNovo.equals(ultimoUsuario)) return
+            if (usuarioNovo == ultimoUsuario) return
+
+            var lancesDoUsuario = 0
+            lances.forEach {
+                val usuarioExistente = it.usuario
+                if (usuarioExistente == usuarioNovo){
+                    lancesDoUsuario++
+                    if (lancesDoUsuario == 5 ) return
+                }
+            }
         }
 
         lances.add(lance)
