@@ -1,5 +1,8 @@
 package br.com.alura.leilao.model
 
+import br.com.alura.leilao.exception.LanceMenorQueUltimoLanceException
+import br.com.alura.leilao.exception.LanceSeguidoDoMesmoUsuarioException
+import br.com.alura.leilao.exception.UsuarioJaFezCincoLancesException
 import java.io.Serializable
 
 class Leilao(val descricao: String) : Serializable {
@@ -10,20 +13,20 @@ class Leilao(val descricao: String) : Serializable {
     fun propoe(lance: Lance) {
         val valorLance = lance.valor
 
-        if (maiorLance > valorLance) return throw RuntimeException("Lance é menor que o maior lance")
+        if (maiorLance > valorLance) return throw LanceMenorQueUltimoLanceException()
 
         if (lances.isNotEmpty()) {
             val usuarioNovo = lance.usuario
             val ultimoUsuario = lances[0].usuario
 
-            if (usuarioNovo == ultimoUsuario) return throw RuntimeException("Mesmo usuario do ultimo lance")
+            if (usuarioNovo == ultimoUsuario) return throw LanceSeguidoDoMesmoUsuarioException()
 
             var lancesDoUsuario = 0
             lances.forEach {
                 val usuarioExistente = it.usuario
                 if (usuarioExistente == usuarioNovo) {
                     lancesDoUsuario++
-                    if (lancesDoUsuario == 5) return throw RuntimeException("Lance limite de 5 vezes")
+                    if (lancesDoUsuario == 5) return throw UsuarioJaFezCincoLancesException()
                 }
             }
         }
