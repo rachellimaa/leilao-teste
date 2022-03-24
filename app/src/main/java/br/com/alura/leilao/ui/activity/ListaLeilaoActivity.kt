@@ -27,19 +27,14 @@ class ListaLeilaoActivity : AppCompatActivity() {
     }
 }
 
-private fun leiloesDeExemplo(): List<Leilao> {
+private fun leiloesDeExemplo(): MutableList<Leilao> {
     val console = Leilao("Console")
     console.propoe(Lance(Usuario("Rachel Lima"), 200.0))
     console.propoe(Lance(Usuario("Alex"), 300.0))
-
-    val computador = Leilao("Computador")
     console.propoe(Lance(Usuario("Rachel "), 300.0))
     console.propoe(Lance(Usuario("Alex Segundo"), 600.0))
 
-    return ArrayList(
-        listOf(
-            console,
-            computador
-        )
+    return mutableListOf(
+        console
     )
 }

@@ -4,7 +4,6 @@ import br.com.alura.leilao.exception.LanceMenorQueUltimoLanceException
 import br.com.alura.leilao.exception.LanceSeguidoDoMesmoUsuarioException
 import br.com.alura.leilao.exception.UsuarioJaFezCincoLancesException
 import br.com.alura.leilao.extensions.formatarReal
-import br.com.alura.leilao.ui.activity.LancesLeilaoActivity
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
