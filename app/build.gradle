@@ -25,6 +25,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
+    implementation "org.hamcrest:hamcrest-core:$hamcrestVersion"
     testImplementation "junit:junit:$junitVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

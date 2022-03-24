@@ -3,6 +3,9 @@ package br.com.alura.leilao.model
 import br.com.alura.leilao.exception.LanceMenorQueUltimoLanceException
 import br.com.alura.leilao.exception.LanceSeguidoDoMesmoUsuarioException
 import br.com.alura.leilao.exception.UsuarioJaFezCincoLancesException
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -14,7 +17,8 @@ class LeilaoTest {
     @Test
     fun testeDescricao() {
         val descricaoDevolvida = console.descricao
-        assertEquals("Console", descricaoDevolvida)
+
+        assertThat(descricaoDevolvida, equalTo("Console"))
     }
 
     private val delta = 0.0001
@@ -25,7 +29,7 @@ class LeilaoTest {
 
         val maiorValorDevolvidoConsole = console.maiorLance
 
-        assertEquals(200.0, maiorValorDevolvidoConsole, delta)
+        assertThat(maiorValorDevolvidoConsole, closeTo(200.0, delta))
 
     }
 
@@ -36,7 +40,7 @@ class LeilaoTest {
 
         val maiorValorDevolvido = console.maiorLance
 
-        assertEquals(200.0, maiorValorDevolvido, delta)
+        assertThat(maiorValorDevolvido, closeTo(200.0, delta))
     }
 
     @Test
@@ -45,8 +49,7 @@ class LeilaoTest {
 
         val menorValorDevolvidoConsole = console.menorLance
 
-        assertEquals(200.0, menorValorDevolvidoConsole, delta)
-
+        assertThat(menorValorDevolvidoConsole, closeTo(200.0, delta))
     }
 
     @Test
@@ -56,7 +59,7 @@ class LeilaoTest {
 
         val menorValorDevolvido = console.menorLance
 
-        assertEquals(100.0, menorValorDevolvido, delta)
+        assertThat(menorValorDevolvido, closeTo(100.0, delta))
     }
 
     @Test
@@ -67,10 +70,27 @@ class LeilaoTest {
 
         val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
-        assertEquals(3, listLances.size)
-        assertEquals(500.0, listLances[0].valor, delta)
-        assertEquals(300.0, listLances[1].valor, delta)
-        assertEquals(200.0, listLances[2].valor, delta)
+   //     assertThat(listLances, hasSize(3))
+
+        // assertThat(listLances, hasItem(Lance(Usuario("Teste1"), 500.0)))
+
+//        assertThat(listLances, contains(
+//            Lance(Usuario("Teste1"), 500.0),
+//            Lance(Usuario("Teste2"), 300.0),
+//            Lance(Usuario("Teste1"), 200.0)
+//        ))
+
+        assertThat(
+            listLances,
+            both(hasItem(Lance(Usuario("Teste1"), 500.0))).and(
+                contains(
+                    Lance(Usuario("Teste1"), 500.0),
+                    Lance(Usuario("Teste2"), 300.0),
+                    Lance(Usuario("Teste1"), 200.0)
+                )
+            )
+        )
+
     }
 
     @Test
@@ -86,7 +106,7 @@ class LeilaoTest {
 
         val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
-        assertEquals(1, listLances.size)
+        assertThat(listLances, hasSize(1))
         assertEquals(200.0, listLances[0].valor, delta)
     }
 
@@ -97,7 +117,7 @@ class LeilaoTest {
 
         val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
-        assertEquals(2, listLances.size)
+        assertThat(listLances, hasSize(2))
         assertEquals(400.0, listLances[0].valor, delta)
         assertEquals(200.0, listLances[1].valor, delta)
     }
@@ -113,7 +133,7 @@ class LeilaoTest {
 
         val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
-        assertEquals(3, listLances.size)
+        assertThat(listLances, hasSize(3))
         assertEquals(600.0, listLances[0].valor, delta)
         assertEquals(500.0, listLances[1].valor, delta)
         assertEquals(400.0, listLances[2].valor, delta)
@@ -123,14 +143,14 @@ class LeilaoTest {
     fun maiorLanceDevolverZeroQuandoNaoTiverLance() {
         val maiorLanceDevolvido = console.maiorLance
 
-        assertEquals(0.0, maiorLanceDevolvido, delta)
+        assertThat(maiorLanceDevolvido, closeTo(0.0, delta))
     }
 
     @Test
     fun menorLanceDevolverZeroQuandoNaoTiverLance() {
         val menorLanceDevolvido = console.menorLance
 
-        assertEquals(0.0, menorLanceDevolvido, delta)
+        assertThat(menorLanceDevolvido, closeTo(0.0, delta))
     }
 
     @Test(expected = LanceMenorQueUltimoLanceException::class)
@@ -162,7 +182,7 @@ class LeilaoTest {
     }
 
     @Test
-    fun testJunit(){
+    fun testJunit() {
         assertEquals(4, 2 + 2)
         assertNotEquals(3, 2 + 2)
 
