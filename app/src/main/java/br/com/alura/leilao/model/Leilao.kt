@@ -53,6 +53,4 @@ class Leilao(val descricao: String) : Serializable {
         if (quantidade > 3) quantidade = 3
         return lances.subList(0, quantidade)
     }
-
-    fun quantidadeDevolvida(): Int = lances.size
 }

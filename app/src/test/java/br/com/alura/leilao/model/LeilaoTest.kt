@@ -160,4 +160,17 @@ class LeilaoTest {
         console.propoe(Lance(user2, 1000.0))
         console.propoe(Lance(user1, 1100.0))
     }
+
+    @Test
+    fun testJunit(){
+        assertEquals(4, 2 + 2)
+        assertNotEquals(3, 2 + 2)
+
+        assertTrue(true)
+        assertFalse(false)
+
+        assertNull(null)
+        assertNotNull(Usuario("Rachel"))
+
+    }
 }
