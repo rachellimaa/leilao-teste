@@ -40,13 +40,6 @@ class Leilao(val descricao: String) : Serializable {
         }
 
         calculaMaiorLance(valorLance)
-        calculaMenorLance(valorLance)
-    }
-
-    private fun calculaMenorLance(valorLance: Double) {
-        if (valorLance < menorLance) {
-            menorLance = valorLance
-        }
     }
 
     private fun calculaMaiorLance(valorLance: Double) {
