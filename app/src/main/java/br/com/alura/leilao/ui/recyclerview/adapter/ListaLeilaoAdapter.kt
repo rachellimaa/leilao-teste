@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.leilao.R
+import br.com.alura.leilao.extensions.formatarReal
 import br.com.alura.leilao.model.Leilao
 
 class ListaLeilaoAdapter(private val context: Context, private val leiloes: List<Leilao>) :
@@ -35,7 +36,7 @@ class ListaLeilaoAdapter(private val context: Context, private val leiloes: List
         fun vincula(leilao: Leilao) {
             this.leilao = leilao
             descricao.text = leilao.descricao
-            maiorLance.text = leilao.maiorLance.toString()
+            maiorLance.text = formatarReal(leilao.maiorLance)
         }
 
         init {

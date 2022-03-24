@@ -3,6 +3,8 @@ package br.com.alura.leilao.model
 import br.com.alura.leilao.exception.LanceMenorQueUltimoLanceException
 import br.com.alura.leilao.exception.LanceSeguidoDoMesmoUsuarioException
 import br.com.alura.leilao.exception.UsuarioJaFezCincoLancesException
+import br.com.alura.leilao.extensions.formatarReal
+import br.com.alura.leilao.ui.activity.LancesLeilaoActivity
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -192,5 +194,10 @@ class LeilaoTest {
         assertNull(null)
         assertNotNull(Usuario("Rachel"))
 
+    }
+
+    @Test
+    fun adicionarFormatacao(){
+        assertThat("R$ 200,00", equalTo(formatarReal(200.0)))
     }
 }
