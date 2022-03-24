@@ -1,7 +1,6 @@
 package br.com.alura.leilao.model
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
+import org.junit.Assert.*
 import org.junit.Test
 
 class LeilaoTest {
@@ -134,23 +133,20 @@ class LeilaoTest {
     @Test
     fun adicionarLanceQuandoForMenorQueOMaiorLance() {
         console.propoe(Lance(user1, 700.0))
-        try {
+
+        val exception = assertThrows(RuntimeException::class.java) {
             console.propoe(Lance(Usuario("Teste2"), 400.0))
-            fail("Era esperado uma RuntimeException")
-        } catch (e: RuntimeException) {
-            assertEquals("Lance é menor que o maior lance", e.message)
         }
+        assertEquals("Lance é menor que o maior lance", exception.message)
     }
 
     @Test
     fun adicionarLanceQuandoForOMesmoUsuario() {
         console.propoe(Lance(user1, 500.0))
-        try {
+        val exception = assertThrows(RuntimeException::class.java) {
             console.propoe(Lance(Usuario("Teste1"), 600.0))
-            fail("Runtime Exception")
-        } catch (e: RuntimeException) {
-            assertEquals("Mesmo usuario do ultimo lance", e.message)
         }
+        assertEquals("Mesmo usuario do ultimo lance", exception.message)
     }
 
     @Test
@@ -166,10 +162,9 @@ class LeilaoTest {
         console.propoe(Lance(user2, 800.0))
         console.propoe(Lance(user1, 900.0))
         console.propoe(Lance(user2, 1000.0))
-        try {
+        val exception = assertThrows(RuntimeException::class.java) {
             console.propoe(Lance(user1, 1100.0))
-        } catch (e: RuntimeException) {
-            assertEquals("Lance limite de 5 vezes", e.message)
         }
+        assertEquals("Lance limite de 5 vezes", exception.message)
     }
 }
