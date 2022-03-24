@@ -10,20 +10,20 @@ class Leilao(val descricao: String) : Serializable {
     fun propoe(lance: Lance) {
         val valorLance = lance.valor
 
-        if (maiorLance > valorLance) return throw RuntimeException()
+        if (maiorLance > valorLance) return throw RuntimeException("Lance é menor que o maior lance")
 
         if (lances.isNotEmpty()) {
             val usuarioNovo = lance.usuario
             val ultimoUsuario = lances[0].usuario
 
-            if (usuarioNovo == ultimoUsuario) return
+            if (usuarioNovo == ultimoUsuario) return throw RuntimeException("Mesmo usuario do ultimo lance")
 
             var lancesDoUsuario = 0
             lances.forEach {
                 val usuarioExistente = it.usuario
                 if (usuarioExistente == usuarioNovo) {
                     lancesDoUsuario++
-                    if (lancesDoUsuario == 5) return
+                    if (lancesDoUsuario == 5) return throw RuntimeException("Lance limite de 5 vezes")
                 }
             }
         }

@@ -138,18 +138,19 @@ class LeilaoTest {
             console.propoe(Lance(Usuario("Teste2"), 400.0))
             fail("Era esperado uma RuntimeException")
         } catch (e: RuntimeException) {
-            e.printStackTrace()
+            assertEquals("Lance é menor que o maior lance", e.message)
         }
     }
 
     @Test
     fun adicionarLanceQuandoForOMesmoUsuario() {
         console.propoe(Lance(user1, 500.0))
-        console.propoe(Lance(Usuario("Teste1"), 600.0))
-
-        val quantidadeLancesDevolvidas = console.quantidadeDevolvida()
-
-        assertEquals(1, quantidadeLancesDevolvidas)
+        try {
+            console.propoe(Lance(Usuario("Teste1"), 600.0))
+            fail("Runtime Exception")
+        } catch (e: RuntimeException) {
+            assertEquals("Mesmo usuario do ultimo lance", e.message)
+        }
     }
 
     @Test
@@ -165,11 +166,10 @@ class LeilaoTest {
         console.propoe(Lance(user2, 800.0))
         console.propoe(Lance(user1, 900.0))
         console.propoe(Lance(user2, 1000.0))
-        console.propoe(Lance(user1, 1100.0))
-        console.propoe(Lance(user2, 1200.0))
-
-        val quantidadeLancesDevolvidas = console.quantidadeDevolvida()
-
-        assertEquals(10, quantidadeLancesDevolvidas)
+        try {
+            console.propoe(Lance(user1, 1100.0))
+        } catch (e: RuntimeException) {
+            assertEquals("Lance limite de 5 vezes", e.message)
+        }
     }
 }
