@@ -10,9 +10,9 @@ class Leilao(val descricao: String) : Serializable {
     fun propoe(lance: Lance) {
         val valorLance = lance.valor
 
-        if (maiorLance > valorLance) return
+        if (maiorLance > valorLance) return throw RuntimeException()
 
-        if (lances.isNotEmpty()){
+        if (lances.isNotEmpty()) {
             val usuarioNovo = lance.usuario
             val ultimoUsuario = lances[0].usuario
 
@@ -21,9 +21,9 @@ class Leilao(val descricao: String) : Serializable {
             var lancesDoUsuario = 0
             lances.forEach {
                 val usuarioExistente = it.usuario
-                if (usuarioExistente == usuarioNovo){
+                if (usuarioExistente == usuarioNovo) {
                     lancesDoUsuario++
-                    if (lancesDoUsuario == 5 ) return
+                    if (lancesDoUsuario == 5) return
                 }
             }
         }
@@ -31,7 +31,7 @@ class Leilao(val descricao: String) : Serializable {
         lances.add(lance)
         lances.sortByDescending { it.valor }
 
-        if (lances.size == 1){
+        if (lances.size == 1) {
             maiorLance = valorLance
             menorLance = valorLance
         }

@@ -1,6 +1,7 @@
 package br.com.alura.leilao.model
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Test
 
 class LeilaoTest {
@@ -57,12 +58,12 @@ class LeilaoTest {
     }
 
     @Test
-    fun testeTresMaioresLances(){
+    fun testeTresMaioresLances() {
         console.propoe(Lance(user1, 200.0))
         console.propoe(Lance(Usuario("Teste2"), 300.0))
         console.propoe(Lance(Usuario("Teste1"), 500.0))
 
-        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+        val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
         assertEquals(3, listLances.size)
         assertEquals(500.0, listLances[0].valor, delta)
@@ -71,28 +72,28 @@ class LeilaoTest {
     }
 
     @Test
-    fun tresMaioresLancesSemLance(){
-        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+    fun tresMaioresLancesSemLance() {
+        val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
         assertEquals(0, listLances.size)
     }
 
     @Test
-    fun treMaioresLancesComUmLance(){
+    fun treMaioresLancesComUmLance() {
         console.propoe(Lance(user1, 200.0))
 
-        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+        val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
         assertEquals(1, listLances.size)
         assertEquals(200.0, listLances[0].valor, delta)
     }
 
     @Test
-    fun treMaioresLancesComDoisLances(){
+    fun treMaioresLancesComDoisLances() {
         console.propoe(Lance(user1, 200.0))
         console.propoe(Lance(Usuario("Teste2"), 400.0))
 
-        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+        val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
         assertEquals(2, listLances.size)
         assertEquals(400.0, listLances[0].valor, delta)
@@ -100,7 +101,7 @@ class LeilaoTest {
     }
 
     @Test
-    fun treMaioresLancesComMaisDeTresLances(){
+    fun treMaioresLancesComMaisDeTresLances() {
         console.propoe(Lance(user1, 100.0))
         console.propoe(Lance(Usuario("Teste2"), 200.0))
         console.propoe(Lance(user1, 300.0))
@@ -108,7 +109,7 @@ class LeilaoTest {
         console.propoe(Lance(user1, 500.0))
         console.propoe(Lance(Usuario("Teste2"), 600.0))
 
-        val listLances : MutableList<Lance> = console.getTresMaioresLances()
+        val listLances: MutableList<Lance> = console.getTresMaioresLances()
 
         assertEquals(3, listLances.size)
         assertEquals(600.0, listLances[0].valor, delta)
@@ -117,31 +118,32 @@ class LeilaoTest {
     }
 
     @Test
-    fun maiorLanceDevolverZeroQuandoNaoTiverLance(){
+    fun maiorLanceDevolverZeroQuandoNaoTiverLance() {
         val maiorLanceDevolvido = console.maiorLance
 
         assertEquals(0.0, maiorLanceDevolvido, delta)
     }
 
     @Test
-    fun menorLanceDevolverZeroQuandoNaoTiverLance(){
+    fun menorLanceDevolverZeroQuandoNaoTiverLance() {
         val menorLanceDevolvido = console.menorLance
 
         assertEquals(0.0, menorLanceDevolvido, delta)
     }
 
     @Test
-    fun adicionarLanceQuandoForMenorQueOMaiorLance(){
+    fun adicionarLanceQuandoForMenorQueOMaiorLance() {
         console.propoe(Lance(user1, 700.0))
-        console.propoe(Lance(Usuario("Teste2"), 400.0))
-
-        val quantidadeLancesDevolvidas = console.quantidadeDevolvida()
-
-        assertEquals(1, quantidadeLancesDevolvidas)
+        try {
+            console.propoe(Lance(Usuario("Teste2"), 400.0))
+            fail("Era esperado uma RuntimeException")
+        } catch (e: RuntimeException) {
+            e.printStackTrace()
+        }
     }
 
     @Test
-    fun adicionarLanceQuandoForOMesmoUsuario(){
+    fun adicionarLanceQuandoForOMesmoUsuario() {
         console.propoe(Lance(user1, 500.0))
         console.propoe(Lance(Usuario("Teste1"), 600.0))
 
@@ -151,7 +153,7 @@ class LeilaoTest {
     }
 
     @Test
-    fun adicionarLanceQuandoOUsuarioDerCincoLances(){
+    fun adicionarLanceQuandoOUsuarioDerCincoLances() {
         val user2 = Usuario("Teste2")
         console.propoe(Lance(user1, 100.0))
         console.propoe(Lance(user2, 200.0))
